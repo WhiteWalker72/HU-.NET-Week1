@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TicTacToeLibrary;
+using TicTacToe.Utils;
 
 namespace TicTacToe
 {
     public class Program
     {
-        private static readonly TicTacToeEngine engine = new TicTacToeEngine();
 
         [STAThread]
         static void Main()

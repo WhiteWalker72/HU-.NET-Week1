@@ -36,8 +36,7 @@ namespace TicTacToeLibrary
 
         public bool HasWon(char symbol)
         {
-            Console.WriteLine("Symbol: "  + symbol);
-            // Checking rows horizontally
+            // Checking rows
             for (int x = 0; x < matrix.GetLength(0); x++)
             {
                 int horCounter = 0;
@@ -51,7 +50,6 @@ namespace TicTacToeLibrary
                         return true;
                 }
             }
-
 
             // Checking diag
             for (int i = 0; i < matrix.GetLength(0); i++)
