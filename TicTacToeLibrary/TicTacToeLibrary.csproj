@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameBoard.cs" />
+    <Compile Include="IGameBoard.cs" />
+    <Compile Include="MatrixGameBoard.cs" />
     <Compile Include="TicTacToeEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -155,14 +155,14 @@ namespace TicTacToe
             button8.Click += new System.EventHandler(this.button_Click);
             button9.Click += new System.EventHandler(this.button_Click);
 
-            // The designer crashes if I do this, but the code works just fine.. 
+            //The designer crashes if I use a loop, but the code works just fine.. 
             //foreach (Control control in Controls)
             //{
             //    if (control is Button)
             //    {
             //        control.Click += new System.EventHandler(this.button_Click);
             //    }
-            //}      
+            //}
         }
         #endregion
     }

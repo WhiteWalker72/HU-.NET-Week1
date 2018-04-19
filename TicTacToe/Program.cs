@@ -7,20 +7,17 @@ using TicTacToeLibrary;
 
 namespace TicTacToe
 {
-    static class Program
+    public class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        private static readonly TicTacToeEngine engine = new TicTacToeEngine();
+
         [STAThread]
         static void Main()
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Board());
-
-            GameBoard board = new GameBoard();
-            Console.WriteLine(board.toString());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Board());
         }
+
     }
 }
