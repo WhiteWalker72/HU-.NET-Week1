@@ -7,7 +7,7 @@ namespace TicTacToeConsole
     class Program
     {
 
-        private static readonly TicTacToeEngine engine = new TicTacToeEngine();
+        private static readonly TicTacToeEngine engine = new TicTacToeEngine(4, new LoopList<Player> { new Player('X'), new Player('O'), new Player('#') });
 
         static void Main(string[] args)
         {
@@ -20,8 +20,8 @@ namespace TicTacToeConsole
 
             while (!engine.GameFinished())
             {
-                Console.WriteLine("Type a number from 1-9, new, gui or quit");
-                Console.WriteLine("Status: " + engine.Status);
+                Console.WriteLine("Type a number from 1-9, new or quit");
+                Console.WriteLine("Current Player: Player" + engine.GetCurrentPlayer().GetSymbol());
                 Console.WriteLine(engine.Board());
                 string input = Console.ReadLine();
 
@@ -43,26 +43,17 @@ namespace TicTacToeConsole
                         engine.Reset();
                         continue;
                     }
-                    else if (lowerInput == "gui")
-                    {
-                        var proc = new Process();
-                        proc.StartInfo.FileName = "C:\\Users\\sivar\\Documents\\Visual Studio 2017\\Projects\\HU-.NET-Week1\\" +
-                            "TicTacToe\\bin\\Release\\TicTacToe.exe";
-                        proc.StartInfo.Arguments = "-v -s -a";
-                        proc.Start();
-                        return;
-                    } else if (lowerInput == "quit")
+                    else if (lowerInput == "quit")
                     {
                         return;
                     }
-                    Console.WriteLine("Your input was invalid.");
-                    continue;
+                    Console.WriteLine("Your input was invalid.");            
                 }
             }
-            if (engine.Status.ToString().ToLower().Contains("wins"))
+
+            if (engine.Status.ToString().ToLower().Contains("won"))
             {
-                char playerWon = engine.Status.Equals(GameStatus.PlayerOWins) ? 'O' : 'X';
-                Console.WriteLine("Player {0} won!", playerWon);
+                Console.WriteLine("Player {0} won!", engine.GetCurrentPlayer().GetSymbol());
             }
             else
             {

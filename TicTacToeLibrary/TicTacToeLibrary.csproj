@@ -41,7 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IGameBoard.cs" />
+    <Compile Include="LoopList.cs" />
     <Compile Include="MatrixGameBoard.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="TicTacToeEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

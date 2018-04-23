@@ -14,7 +14,7 @@ namespace TicTacToeLibrary
         public MatrixGameBoard() : this(3) { }
 
         public MatrixGameBoard(int size) {
-            this.boardSize = boardSize > 0 ? boardSize : 3;
+            this.boardSize = size > 0 ? size : 3;
             Reset();
         }
 

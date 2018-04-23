@@ -15,12 +15,10 @@ namespace TicTacToe
     public partial class Board : Form
     {
         private readonly TicTacToeEngine engine = new TicTacToeEngine();
-        private bool oIsPlaying;
 
         public Board()
         {
             InitializeComponent();
-            ResetBoard();
         }
 
         private void button_Click(object sender, EventArgs e)
@@ -29,17 +27,16 @@ namespace TicTacToe
             {
                 Button button = (Button) sender;
                 int btnNumber = StringUtils.GetStringInteger(button.Name);
+                char symbol = engine.GetCurrentPlayer().GetSymbol();
 
                 if (engine.ChooseCell(btnNumber))
                 {
-                    oIsPlaying = !oIsPlaying;
-                    button.Text = oIsPlaying ? "X" : "O";
+                    button.Text = symbol.ToString();
 
                     if (engine.GameFinished())
                     {
-                        String playerWon = engine.Status.Equals(GameStatus.PlayerOWins) ? "O" : "X";
-                        MessageBox.Show("Player " + playerWon + " won! The game is restarting.");
-
+                        String endText = engine.Status.ToString().ToLower().Contains("won") ? "Player " + engine.GetCurrentPlayer().GetSymbol() + " won!" : "The game ended in a draw.";
+                        MessageBox.Show(endText + " The game is restarting.");
                         engine.Reset();
                         ResetBoard();
                     }
@@ -49,13 +46,10 @@ namespace TicTacToe
 
         private void ResetBoard()
         {
-            oIsPlaying = true;
-            foreach (Component comp in Controls)
-            {
-                if (comp is Button)
+            foreach (Control control in Controls) {
+                if (control is Button)
                 {
-                    Button btn = (Button) comp;
-                    btn.Text = StringUtils.GetStringInteger(btn.Name).ToString();
+                    control.Text = "";
                 }
             }
         }

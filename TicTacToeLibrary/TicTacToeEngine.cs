@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TicTacToeLibrary
 {
     public class TicTacToeEngine
     {
         private IGameBoard gameboard;
+        private LoopList<Player> playerList;
 
-        public TicTacToeEngine()
+        public TicTacToeEngine() : this(3, new LoopList<Player> { new Player('X'), new Player('O') }) { }
+
+        public TicTacToeEngine(int boardSize, LoopList<Player> players)
         {
-            Status = GameStatus.PlayerOPlays;
-            gameboard = new MatrixGameBoard();
+            this.playerList = players;
+            Status = GameStatus.PlayerPlays;
+            gameboard = new MatrixGameBoard(boardSize);
         }
 
         public GameStatus Status { get; private set; }
@@ -26,14 +26,19 @@ namespace TicTacToeLibrary
         public bool ChooseCell(int cell)
         {
             bool replaced = false;
-            if (Status.Equals(GameStatus.PlayerOPlays))
+            if (Status.Equals(GameStatus.PlayerPlays))
             {
-                replaced = HandleCellAction(cell, GameStatus.PlayerXPlays, GameStatus.PlayerOWins, 'O');
-            }
-            else if (Status.Equals(GameStatus.PlayerXPlays))
-            {
-                replaced = HandleCellAction(cell, GameStatus.PlayerOPlays, GameStatus.PlayerXWins, 'X');
-            }
+                char symbol = GetCurrentPlayer().GetSymbol();
+                replaced = gameboard.ReplaceNumber(cell, symbol);
+
+                if (replaced)
+                {
+                    if (gameboard.HasWon(symbol))
+                        Status = GameStatus.PlayerWon;
+                    else
+                        playerList.GetNext();
+                }
+            }         
             return replaced;
         }
 
@@ -49,19 +54,26 @@ namespace TicTacToeLibrary
 
         public void Reset()
         {
-            Status = GameStatus.PlayerOPlays;
+            Status = GameStatus.PlayerPlays;
+            playerList.Reset();
             gameboard.Reset();
         }
 
         public bool GameFinished()
         {
-            return Status.ToString().ToUpper().Contains("WINS") || gameboard.GetNumbersLeft() <= 0;
+            return Status.ToString().ToUpper().Contains("WON") || gameboard.GetNumbersLeft() <= 0;
         }
+
+        public Player GetCurrentPlayer()
+        {
+            return playerList.GetCurrent();
+        }
+
     }    
 
     public enum GameStatus
     {
-        PlayerOPlays, PlayerXPlays, Equal, PlayerOWins, PlayerXWins
+        PlayerPlays, Equal, PlayerWon
     }   
 
 }
